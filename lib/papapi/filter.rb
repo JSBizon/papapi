@@ -1,0 +1,34 @@
+module Papapi
+  class Filter
+    LIKE = "L"
+    NOT_LIKE = "NL"
+    EQUALS = "E"
+    NOT_EQUALS = "NE"
+
+    DATE_EQUALS = "D="
+    DATE_GREATER = "D>"
+    DATE_LOWER = "D<"
+    DATE_EQUALS_GREATER = "D>="
+    DATE_EQUALS_LOWER = "D<="
+    DATERANGE_IS = "DP"
+    TIME_EQUALS = "T="
+    TIME_GREATER = "T>"
+    TIME_LOWER = "T<"
+    TIME_EQUALS_GREATER = "T>="
+    TIME_EQUALS_LOWER = "T<="
+
+    RANGE_TODAY = 'T'
+    RANGE_YESTERDAY = 'Y'
+    RANGE_LAST_7_DAYS = 'L7D'
+    RANGE_LAST_30_DAYS = 'L30D'
+    RANGE_LAST_90_DAYS = 'L90D'
+    RANGE_THIS_WEEK = 'TW'
+    RANGE_LAST_WEEK = 'LW'
+    RANGE_LAST_2WEEKS = 'L2W'
+    RANGE_LAST_WORKING_WEEK = 'LWW'
+    RANGE_THIS_MONTH = 'TM'
+    RANGE_LAST_MONTH = 'LM'
+    RANGE_THIS_YEAR = 'TY'
+    RANGE_LAST_YEAR = 'LY'
+  end
+end
