@@ -12,6 +12,7 @@ module Papapi
     def load
       data = Papapi::FormRequest.new('Pap_Affiliates_Profile_PersonalDetailsForm', 'load', affiliate_session)
       @response = request.send
+      self
     end
 
     def id
