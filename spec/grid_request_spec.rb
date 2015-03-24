@@ -15,7 +15,7 @@ RSpec.describe Papapi::GridRequest do
 
   context "load affiliate transaction grid" do
     it "#send" do
-      affiliate_session = Papapi::Session.new(script_url,true).login(affiliate_login, affiliate_password, Papapi::Session::AFFILIATE)
+      affiliate_session = Papapi::Session.new(script_url).login(affiliate_login, affiliate_password, Papapi::Session::AFFILIATE)
       request = Papapi::GridRequest.new("Pap_Affiliates_Reports_TransactionsGrid", "getRows", affiliate_session)
       response = request.send
       expect(response.count).to be > 1

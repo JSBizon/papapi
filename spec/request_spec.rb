@@ -2,7 +2,7 @@ require 'papapi'
 require 'spec_helper'
 
 RSpec.describe Papapi::Request do
-  let(:session) { Papapi::Session.new(script_url,true).login(merchant_login, merchant_password) }
+  let(:session) { Papapi::Session.new(script_url).login(merchant_login, merchant_password) }
 
   context "load statistics data" do
     it "#send" do
