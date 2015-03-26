@@ -9,6 +9,7 @@ module Papapi
     end
 
     def by_orders(order_ids)
+      commissions = Hash[order_ids.map {|i| [i.to_s, 0.0]}]
       requests = order_ids.map do |order_id|
         r = GridRequest.new("Pap_Affiliates_Reports_TransactionsGrid", "getRows", @session)
         r.set_param("isInitRequest","Y")
@@ -17,7 +18,8 @@ module Papapi
         r
       end
 
-      commissions = Hash[order_ids.map {|i| [i.to_s, 0.0]}]
+      return commissions if requests.length == 0
+
       responses = MultiRequest.new(requests).send
       responses.each do |resp|
         resp.each do |row|

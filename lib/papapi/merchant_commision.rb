@@ -1,6 +1,8 @@
 module Papapi
   require_relative 'grid_request'
   require_relative 'merchant'
+  require_relative 'request'
+  require_relative 'form_request'
   class Merchant::Commission
 
     def initialize(session)
@@ -30,6 +32,27 @@ module Papapi
         end
       end
       commissions
+    end
+
+    def create(affiliate_id, campaign_id, commission, commtypeid, payoutstatus = '', fields = {})
+      r = FormRequest.new('Pap_Merchants_Transaction_TransactionsForm', 'add', @session)
+      f = {
+          :userid => affiliate_id,
+          :campaignid => campaign_id,
+          :commtypeid => commtypeid,
+          :commission => commission,
+          :payoutstatus => payoutstatus,
+          :multiTier => "N"
+      }.merge(fields)
+      r.set_fields(f)
+      r.send
+    end
+
+    def remove(commission_ids)
+      #{"C":"Pap_Merchants_Transaction_TransactionsForm", "M":"deleteRows", "ids":["00a47a09"]
+      r = Request.new('Pap_Merchants_Transaction_TransactionsForm', 'deleteRows', @session)
+      r.set_param('ids', commission_ids)
+      r.send
     end
 
   end

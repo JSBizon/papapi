@@ -19,14 +19,19 @@ module Papapi
       @columns << [column]
     end
 
+    def set_sorting(column, sort_asc)
+      @sort_col = column
+      @sort_asc = sort_asc
+    end
+
     def to_data
       data = super
       data[:filters] = @filters || []
       data[:columns] = @columns || []
-      data[:sort_col] = sort_col || ""
-      data[:sort_asc] = sort_asc || false
-      data[:offset] = offset || 0
-      data[:limit] = limit || DEFAULT_LIMIT
+      data[:sort_col] = @sort_col || ""
+      data[:sort_asc] = @sort_asc ? true : false
+      data[:offset] = @offset || 0
+      data[:limit] = @limit || DEFAULT_LIMIT
       data
     end
 
