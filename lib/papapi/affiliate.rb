@@ -10,7 +10,7 @@ module Papapi
     end
 
     def load
-      data = Papapi::FormRequest.new('Pap_Affiliates_Profile_PersonalDetailsForm', 'load', affiliate_session)
+      request = Papapi::FormRequest.new('Pap_Affiliates_Profile_PersonalDetailsForm', 'load', @session)
       @response = request.send
       self
     end
@@ -20,7 +20,7 @@ module Papapi
     end
 
     def [] (key)
-      fields[key.to_sym]
+      @response[key.to_sym]
     end
 
   end
