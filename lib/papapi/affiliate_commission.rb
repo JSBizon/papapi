@@ -1,6 +1,7 @@
 module Papapi
   require_relative 'grid_request'
   require_relative 'multi_request'
+  require_relative 'affiliate'
   class Affiliate::Commission
 
     def initialize(session)
