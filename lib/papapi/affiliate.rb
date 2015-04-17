@@ -3,10 +3,10 @@ module Papapi
   require_relative 'multi_request'
   class Affiliate
 
-    def initialize(session)
+    def initialize(session, response = nil)
       @session = session
       raise "Affiliate session is required" if !@session.is_affiliate?
-      @response = nil
+      @response = response
     end
 
     def load
@@ -20,7 +20,7 @@ module Papapi
     end
 
     def [] (key)
-      @response[key.to_sym]
+      @response ? @response[key.to_sym] : nil
     end
 
   end

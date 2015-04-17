@@ -7,7 +7,12 @@ module Papapi
         @fields = {}
         self.parsed['fields'].each do |field|
           next if REMOVE_VARS.include? field[0]
-          @fields[field[0].to_sym] = field[1]
+          raise "Error: #{field[3]}" if field[3] && ! field[3].empty?
+          if field[2]
+            @fields[field[0].to_sym] = field[2]
+          else
+            @fields[field[0].to_sym] = field[1]
+          end
         end
       end
       @fields
