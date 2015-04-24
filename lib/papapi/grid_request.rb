@@ -10,6 +10,13 @@ module Papapi
       @filters << [code , op, value]
     end
 
+    def add_filters(filters)
+      @filters = [] if ! @filters
+      filters.each do |f|
+        @filters << f
+      end
+    end
+
     def response(http_response)
       GridResponse.new(http_response, self)
     end
@@ -17,6 +24,13 @@ module Papapi
     def add_column(column)
       @columns = [['id']] if ! @columns
       @columns << [column]
+    end
+
+    def add_columns(columns)
+      @columns = [['id']] if ! @columns
+      columns.each do |c|
+        @columns << [c]
+      end
     end
 
     def set_sorting(column, sort_asc)

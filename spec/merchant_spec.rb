@@ -4,14 +4,14 @@ require 'spec_helper'
 RSpec.describe Papapi::Affiliate::Commission do
 
   it "#load" do
-    session = Papapi::Session.new(script_url,true).login(merchant_login, merchant_password)
+    session = Papapi::Session.new(script_url).login(merchant_login, merchant_password)
     merchant = Papapi::Merchant.new(session)
     merchant.load()
     expect(merchant[:username]).to eq('merchant@example.com')
   end
 
   it "#create_affiliate" do
-    session = Papapi::Session.new(script_url, true).login(merchant_login, merchant_password)
+    session = Papapi::Session.new(script_url).login(merchant_login, merchant_password)
     merchant = Papapi::Merchant.new(session)
 
     affiliate = merchant.create_affiliate({
@@ -40,10 +40,21 @@ RSpec.describe Papapi::Affiliate::Commission do
   end
 
   it "#list_fields" do
-    session = Papapi::Session.new(script_url,true).login(merchant_login, merchant_password)
+    session = Papapi::Session.new(script_url).login(merchant_login, merchant_password)
     merchant = Papapi::Merchant.new(session)
     fields = merchant.list_fields
 
     expect(fields[:parentuserid][:formfieldid]).to eq('1')
-    end
+  end
+
+  it "#search_affiliate" do
+    session = Papapi::Session.new(script_url).login(merchant_login, merchant_password)
+    merchant = Papapi::Merchant.new(session)
+
+    affiliates = merchant.search_affiliates(filter: [[:username, Papapi::Filter::EQUALS, 'affiliate@example.com']])
+
+    expect(affiliates.length).to eq(1)
+    expect(affiliates[0]['username']).to eq('affiliate@example.com')
+
+  end
 end

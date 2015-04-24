@@ -1,6 +1,7 @@
 module Papapi
   require_relative 'session'
   require_relative 'grid_request'
+  require_relative 'filter'
   require_relative 'affiliate'
   class Merchant
 
@@ -69,6 +70,37 @@ module Papapi
         }
       end
       fields
+    end
+
+    def search_affiliates(filter: [[:rstatus,'IN','A,D,P']],
+        columns: ["id", "refid", "firstname", "lastname", "username", "rstatus", "parentfirstname", "parentlastname", "dateinserted"],
+        offset: 0,
+        limit: 30,
+        sort_col: "dateinserted",
+        sort_asc: false)
+
+      request = Papapi::GridRequest.new("Pap_Merchants_User_AffiliatesGridSimple", "getRows", @session)
+      request.add_filters(filter)
+      request.add_columns(columns)
+
+      request.sort_col = sort_col
+      request.sort_asc = sort_asc
+      request.offset = offset
+      request.limit = limit
+
+      response = request.send
+
+      affiliates = []
+
+      response.rows.each do |a_data|
+        affiliate = {}
+        response.attributes.each_with_index do |v,i|
+          affiliate[v] = a_data[i]
+        end
+        affiliates.push(affiliate)
+      end
+
+      affiliates
     end
 
     def id

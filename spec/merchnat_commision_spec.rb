@@ -6,7 +6,7 @@ RSpec.describe Papapi::Merchant::Commission do
 
   it "#create" do
     commission = Papapi::Merchant::Commission.new(session)
-    commission.create('11111111', '11111111', 1.0, '5535d2d7','U')
+    #commission.create('11111111', '11111111', 1.0, '5535d2d7','U')
   end
 
   it "#by_orders" do
