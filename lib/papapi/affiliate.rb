@@ -5,18 +5,33 @@ module Papapi
 
     def initialize(session, response = nil)
       @session = session
-      raise "Affiliate session is required" if !@session.is_affiliate?
+      if @session.is_affiliate?
+        @class = 'Pap_Affiliates_Profile_PersonalDetailsForm'
+      else
+        @class = 'Pap_Signup_AffiliateForm'
+      end
       @response = response
+      @user_id = nil
     end
 
     def load
-      request = Papapi::FormRequest.new('Pap_Affiliates_Profile_PersonalDetailsForm', 'load', @session)
+      request = Papapi::FormRequest.new(@class, 'load', @session)
+
+      unless @user_id.nil?
+        request.set_field("Id", @user_id)
+        request.set_field("userid", @user_id)
+      end
+
       @response = request.send
       self
     end
 
     def id
-      @response ? @response[:userid] : nil
+      @response ? @response[:userid] : @user_id
+    end
+
+    def id=(user_id)
+      @user_id = user_id
     end
 
     def [] (key)

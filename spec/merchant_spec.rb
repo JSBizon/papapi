@@ -57,4 +57,15 @@ RSpec.describe Papapi::Affiliate::Commission do
     expect(affiliates[0]['username']).to eq('affiliate@example.com')
 
   end
+
+
+  it "#affiliate_by_username" do
+    session = Papapi::Session.new(script_url).login(merchant_login, merchant_password)
+    merchant = Papapi::Merchant.new(session)
+
+    affiliate = merchant.affiliate_by_username('affiliate@example.com')
+
+    expect(affiliate[:username]).to eq('affiliate@example.com')
+    expect(affiliate.id).to eq('11111111')
+  end
 end

@@ -15,6 +15,12 @@ module Papapi
       parsed['rows'].slice(1, parsed['rows'].count-1)
     end
 
+    def [] (key)
+      if rows[key.to_i]
+        return Hash[*attributes.zip(rows[key.to_i]).flatten]
+      end
+    end
+
     def each
       rows.each do |row|
         yield Hash[*attributes.zip(row).flatten]

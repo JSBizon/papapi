@@ -32,10 +32,6 @@ module Papapi
       request.set_fields(request_fields)
       response = request.send
       response
-      #affiliate = Papapi::Affiliate.new(Papapi::Session.new(@session.url).
-      #                          login(request_fields[:username], request_fields[:rpassword], Papapi::Session::AFFILIATE))
-      #affiliate.load
-      #affiliate
     end
 
     def remove_affiliate(affiliate_id)
@@ -101,6 +97,21 @@ module Papapi
       end
 
       affiliates
+    end
+
+    def affiliate_by_username(username)
+      request = Papapi::GridRequest.new("Pap_Merchants_User_AffiliatesGridSimple", "getRows", @session)
+      request.add_filter('username', Papapi::Filter::EQUALS, username)
+
+      response = request.send
+      if response.count > 0
+        user = response[0]
+        affiliate = Papapi::Affiliate.new(@session)
+        affiliate.id = user['userid']
+        affiliate.load
+        return affiliate
+      end
+
     end
 
     def id
