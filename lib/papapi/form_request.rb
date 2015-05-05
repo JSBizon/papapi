@@ -3,15 +3,25 @@ module Papapi
   class FormRequest < Request
 
     def set_field(key, value)
+      @fields = {} if ! @fields
+      @fields[key.to_sym] = value
+=begin
       @fields = [["name", "value"]] if ! @fields
       @fields.push([key, value])
+=end
     end
 
     def set_fields(f)
+      @fields = {} if ! @fields
+      f.each do |key, value|
+        @fields[key.to_sym] = value
+      end
+=begin
       @fields = [["name", "value"]] if ! @fields
       f.each do |key, value|
         @fields << [key, value]
       end
+=end
     end
 
     def response(http_response)
@@ -20,7 +30,13 @@ module Papapi
 
     def to_data
       data = super
-      data[:fields] = @fields if @fields
+      if @fields
+        data_fields = [["name", "value"]]
+        @fields.each do |key, value|
+          data_fields << [key, value]
+        end
+        data[:fields] = data_fields
+      end
       data
     end
 
