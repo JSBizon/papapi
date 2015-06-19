@@ -1,9 +1,9 @@
 module Papapi
   class Response
-
     REMOVE_VARS = ['name', 'correspondsApi', 'language']
 
     attr_reader :responses
+    attr_reader :request
 
     def initialize (http_response, request)
       @http_response = http_response
@@ -27,6 +27,15 @@ module Papapi
         @parsed = @http_response
       end
       @parsed
+    end
+
+    def to_h
+      h = {}
+      parsed.each_with_index do |p, index|
+        next if index == 0
+        h[p[0].to_sym] = p[1]
+      end
+      h
     end
 
     private

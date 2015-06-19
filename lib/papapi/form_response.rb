@@ -22,5 +22,9 @@ module Papapi
       fields[key.to_sym]
     end
 
+    def to_h
+      fields
+    end
+
   end
 end

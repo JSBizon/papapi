@@ -11,6 +11,7 @@ module Papapi
 
     M_ALLOWED_FIELDS = [:parentuserid, :rstatus, :agreeWithTerms] | A_ALLOWED_FIELDS
 
+    attr_accessor :response
 
     def initialize(session, response = nil)
       @session = session
@@ -88,6 +89,10 @@ module Papapi
       raise "Field #{key} can not be modified" if (@session.is_affiliate? && ! A_ALLOWED_FIELDS.include?(key.to_sym)) ||
                                                   (@session.is_merchant? && ! M_ALLOWED_FIELDS.include?(key.to_sym))
       @update_fields[key.to_sym] = value
+    end
+
+    def to_h
+      response ? response.to_h : {}
     end
 
   end

@@ -16,6 +16,8 @@ module Papapi
         :phone    => :data8
     }
 
+    attr_accessor :response
+
     def initialize(session, response = nil)
       @session = session
       raise "Merchant session is required" if !@session.is_merchant?
@@ -120,6 +122,10 @@ module Papapi
 
     def [] (key)
       @response ? @response[key.to_sym] : nil
+    end
+
+    def to_h
+      response ? response.to_h : {}
     end
 
   end

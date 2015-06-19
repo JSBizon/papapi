@@ -26,5 +26,9 @@ module Papapi
         yield Hash[*attributes.zip(row).flatten]
       end
     end
+
+    def to_a
+      rows
+    end
   end
 end
