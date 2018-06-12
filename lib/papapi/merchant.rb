@@ -108,8 +108,9 @@ module Papapi
       response = request.send
       if response.count > 0
         user = response[0]
+        p user['id']
         affiliate = Papapi::Affiliate.new(@session)
-        affiliate.id = user['userid']
+        affiliate.id = user['userid'] || user['id']
         affiliate.load
         return affiliate
       end
