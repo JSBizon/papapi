@@ -74,6 +74,16 @@ module Papapi
       @response ? @response[:userid] : @user_id
     end
 
+    def getLoginKey
+      raise "Merchant session is required"  if @session.is_affiliate?
+
+      request = Papapi::FormRequest.new('Pap_Auth_LoginKeyService', 'getLoginKey', @session)
+      request.set_param("userId", self.id)
+
+      response = request.send
+
+      return response[:LoginKey]
+    end
 
     def id=(user_id)
       @user_id = user_id
