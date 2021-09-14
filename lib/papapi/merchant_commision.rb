@@ -48,6 +48,26 @@ module Papapi
       r.send
     end
 
+    #[{"C":"Pap_Merchants_Transaction_TransactionsForm","M":"add","fields":[["name","value","values","error"],
+    #["dateinserted","2021-09-14 14:25:59",null,""],["campaignid","11111111",null,""],["totalcost","10",null,""],
+    #["rstatus","P",null,""],["userid","56c3a863adf41",null,""],["orderid","17437",null,""],
+    #["multiTier","Y",null,""],["transid","",null,""],["Id","",null,""],["rtype","S",null,""],["trackmethod","M",null,""]]}]
+    #
+    #commtypeid Can be found in Merchant panel: Campaigns -> Campaign manager -> edit campaign (pencil icon) -> Commission settings
+    def create_raw(affiliate_id, campaign_id, commtypeid, multitier, fields = {})
+      r = FormRequest.new('Pap_Merchants_Transaction_TransactionsForm', 'add', @session)
+      f = {
+        :userid => affiliate_id,
+        :campaignid => campaign_id,
+        :commtypeid => commtypeid,
+        :multiTier => multitier,
+        :transid => nil,
+        :Id => nil
+      }.merge(fields)
+      r.set_fields(f)
+      r.send
+    end
+
     def remove(commission_ids)
       #{"C":"Pap_Merchants_Transaction_TransactionsForm", "M":"deleteRows", "ids":["00a47a09"]
       r = Request.new('Pap_Merchants_Transaction_TransactionsForm', 'deleteRows', @session)
